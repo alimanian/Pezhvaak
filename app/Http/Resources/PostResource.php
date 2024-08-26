@@ -22,6 +22,7 @@ class PostResource extends JsonResource
             'user' => new UserResource($this->whenLoaded('user')),
             'likes_count' => $this->when(isset($this->likes_count), $this->likes_count),
             'comments_count' => $this->when(isset($this->comments_count), $this->comments_count),
+            'attachments' => AttachmentResource::collection($this->whenLoaded('attachments')),
         ];
     }
 }
