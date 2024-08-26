@@ -1,7 +1,8 @@
-# 🚀 پروژه API لاراول پژواک
-
+.
 <details>
 <summary>نسخه فارسی (کلیک کنید)</summary>
+
+# 🚀 پروژه API لاراول پژواک
 
 این پروژه یک API مبتنی بر Laravel برای پژواک است، یک پلتفرم رسانه اجتماعی که به کاربران امکان می‌دهد پست ایجاد کنند، نظر دهند، لایک کنند و کاربران دیگر را دنبال کنند.
 
@@ -28,17 +29,28 @@
    cp .env.example .env
    ```
 
-4. تولید کلید برنامه:
+4. تنظیم اطلاعات دیتابیس در فایل `.env`:
+   اطلاعات ورود به دیتابیس و نام دیتابیس را در فایل `.env` تنظیم کنید. مثال:
+   ```
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=pezhvaak
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+
+5. تولید کلید برنامه:
    ```
    php artisan key:generate
    ```
 
-5. اجرای مایگریشن‌ها و سیدرها:
+6. اجرای مایگریشن‌ها و سیدرها:
    ```
    php artisan migrate --seed
    ```
 
-6. شروع سرور توسعه:
+7. شروع سرور توسعه:
    ```
    php artisan serve
    ```
@@ -115,7 +127,17 @@
 
 ## 📮 کالکشن Postman
 
-برای سهولت در تست و استفاده از API، یک فایل کالکشن Postman در کنار فایل‌های پروژه قرار داده شده است. می‌توانید این فایل را در Postman وارد کرده و به راحتی API را تست کنید.
+برای سهولت در تست و استفاده از API، یک فایل کالکشن Postman با نام `pezhvaak.postman_collection.json` در دایرکتوری اصلی پروژه قرار داده شده است. شما می‌توانید این فایل را در Postman وارد کرده و به راحتی API را تست کنید.
+
+### راهنمای استفاده از کالکشن Postman:
+
+1. فایل `pezhvaak.postman_collection.json` را در Postman وارد کنید.
+2. در Postman، به بخش `Pezhvaak` بروید و سپس قسمت `Variables` را باز کنید.
+3. مقدار `base_url` را در هر دو فیلد `INITIAL VALUE` و `CURRENT VALUE` تنظیم کنید (معمولاً `http://localhost:8000/api`).
+4. یک درخواست `/login` ارسال کنید تا توکن دریافت کنید.
+5. توکن دریافت شده را در بخش `Variables` در `Pezhvaak` برای متغیر `token` در هر دو فیلد `INITIAL VALUE` و `CURRENT VALUE` قرار دهید.
+6. اکنون می‌توانید از API‌های مختلف استفاده کنید.
+
 
 ## 🤝 مشارکت
 
@@ -157,17 +179,28 @@ This project is a Laravel-based API for Pezhvaak, a social media platform allowi
    cp .env.example .env
    ```
 
-4. Generate application key:
+4. Set up database information in the `.env` file:
+   Configure your database credentials and database name in the `.env` file. For example:
+   ```
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=pezhvaak
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+
+5. Generate application key:
    ```
    php artisan key:generate
    ```
 
-5. Run migrations and seeders:
+6. Run migrations and seeders:
    ```
    php artisan migrate --seed
    ```
 
-6. Start the development server:
+7. Start the development server:
    ```
    php artisan serve
    ```
@@ -239,3 +272,26 @@ This project is a Laravel-based API for Pezhvaak, a social media platform allowi
 6. **Versioning**: The current API version is v1, as evident from the endpoint paths.
 
 7. **Path Parameters**: Parameters marked with (path) are part of the URL path
+
+## 📮 Postman Collection
+
+For ease of testing and using the API, a Postman collection file named `pezhvaak.postman_collection.json` is provided in the root directory of the project. You can import this file into Postman and easily test the API.
+
+### Guide to using the Postman collection:
+
+1. Import the `pezhvaak.postman_collection.json` file into Postman.
+2. In Postman, go to the `Pezhvaak` section and then open the `Variables` tab.
+3. Set the `base_url` value in both the `INITIAL VALUE` and `CURRENT VALUE` fields (typically `http://localhost:8000/api`).
+4. Send a `/login` request to receive a token.
+5. Place the received token in the `Variables` section under `Pezhvaak` for the `token` variable in both `INITIAL VALUE` and `CURRENT VALUE` fields.
+6. You can now use the various APIs.
+
+## 🤝 Contributing
+
+Please contact us before contributing to this project. You can contribute by creating an issue or submitting a pull request.
+
+## 📄 License
+
+This project is licensed under the [License Name]. See the LICENSE file for details.
+
+</details>
