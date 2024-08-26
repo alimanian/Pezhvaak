@@ -26,10 +26,7 @@ class FollowerController extends Controller implements HasMiddleware
             return response()->apiResponse([], false, 'You cannot follow yourself.', 400);
         }
 
-        $follower = Follower::firstOrCreate([
-            'follower_id' => Auth::id(),
-            'following_id' => $user->id
-        ]);
+        $follower = $this->followerService->follow($user);
 
         if ($follower->wasRecentlyCreated) {
             return response()->apiResponse([], true, 'User followed successfully.', 201);
@@ -40,12 +37,10 @@ class FollowerController extends Controller implements HasMiddleware
 
     public function unfollow(User $user)
     {
-        $deleted = Follower::where('follower_id', Auth::id())
-            ->where('following_id', $user->id)
-            ->delete();
+        $deleted = $this->followerService->unfollow($user);
 
         if ($deleted) {
-            return response()->apiResponse([], true, 'User unfollowed successfully.', 200);
+            return response()->json([], 204);
         }
 
         return response()->apiResponse([], false, 'You are not following this user.', 400);
@@ -53,13 +48,13 @@ class FollowerController extends Controller implements HasMiddleware
 
     public function followers(User $user)
     {
-        $followers = $user->followers()->with('follower')->paginate(10);
+        $followers = $this->followerService->getFollowers($user);
         return response()->apiResponse($followers, true, '', 200);
     }
 
     public function following(User $user)
     {
-        $following = $user->following()->with('following')->paginate(10);
+        $following = $this->followerService->getFollowing($user);
         return response()->apiResponse($following, true, '', 200);
     }
 }
