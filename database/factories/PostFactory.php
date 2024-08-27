@@ -17,9 +17,13 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
+        $date = $this->faker->dateTimeBetween('-30 day' );
+
         return [
             'user_id' => User::factory(),
             'content' => $this->faker->paragraph(),
+            'created_at' => $date,
+            'updated_at' => $date,
         ];
     }
 }

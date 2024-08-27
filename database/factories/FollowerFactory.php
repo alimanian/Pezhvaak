@@ -17,9 +17,13 @@ class FollowerFactory extends Factory
      */
     public function definition(): array
     {
+        $date = $this->faker->dateTimeBetween('-30 day' );
+
         return [
             'follower_id' => User::factory(),
             'following_id' => User::factory(),
+            'created_at' => $date,
+            'updated_at' => $date,
         ];
     }
 }

@@ -20,10 +20,14 @@ class AttachmentFactory extends Factory
      */
     public function definition(): array
     {
+        $date = $this->faker->dateTimeBetween('-30 day' );
+
         return [
             'user_id' => User::factory(),
             'post_id' => Post::factory(),
             'media_id' => Media::factory(),
+            'created_at' => $date,
+            'updated_at' => $date,
         ];
     }
 }
