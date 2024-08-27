@@ -16,7 +16,6 @@ class UserController extends Controller
      */
     public function index()
     {
-        return response()->apiResponse(UserResource::collection($this->userService->getPaginatedUsers()),
-            true, '' , 200);
+        return response()->format($this->userService->getPaginatedUsers(), 'User retrieved successfully.');
     }
 }

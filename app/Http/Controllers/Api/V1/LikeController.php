@@ -24,9 +24,9 @@ class LikeController extends Controller implements HasMiddleware
     {
         try {
             $like = $this->likeService->createLike($request);
-            return response()->apiResponse(new LikeResource($like), true, 'Like successfully created.', 201);
+            return response()->format(new LikeResource($like), 'Like successfully created.', true, 201);
         } catch (HttpException $e) {
-            return response()->apiResponse([], false, $e->getMessage(), $e->getStatusCode());
+            return response()->format([], $e->getMessage(), false, $e->getStatusCode());
         }
     }
 
@@ -34,9 +34,9 @@ class LikeController extends Controller implements HasMiddleware
     {
         try {
             $this->likeService->deleteLike($likeId);
-            return response()->json([], 204);
+            return response()->format([], 'Like successfully deleted.');
         } catch (HttpException $e) {
-            return response()->apiResponse([], false, $e->getMessage(), $e->getStatusCode());
+            return response()->format([], $e->getMessage(), false, $e->getStatusCode());
         }
     }
 }

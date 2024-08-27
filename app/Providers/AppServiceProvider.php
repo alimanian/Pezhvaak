@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Services\ApiResponseFormater;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Response::macro('format', function ($data = null, string $message = '', bool $success = true, int $code = 200) {
+            return Response::json(ApiResponseFormater::format($data, $message, $success), $code);
+        });
     }
 }

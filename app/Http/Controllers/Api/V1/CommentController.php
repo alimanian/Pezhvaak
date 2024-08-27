@@ -24,9 +24,9 @@ class CommentController extends Controller implements HasMiddleware
     {
         try {
             $comment = $this->commentService->createComment($request);
-            return response()->apiResponse(new CommentResource($comment), true, 'Comment successfully created.', 201);
+            return response()->format(new CommentResource($comment), 'Comment successfully created.', true, 201);
         } catch (HttpException $e) {
-            return response()->apiResponse([], false, $e->getMessage(), $e->getStatusCode());
+            return response()->format([], $e->getMessage(), false, $e->getStatusCode());
         }
     }
 
@@ -34,9 +34,9 @@ class CommentController extends Controller implements HasMiddleware
     {
         try {
             $this->commentService->deleteComment($id);
-            return response()->json([], 204);
+            return response()->format([], 'Comment successfully deleted.');
         } catch (HttpException $e) {
-            return response()->apiResponse([], false, $e->getMessage(), $e->getStatusCode());
+            return response()->format([], $e->getMessage(), false, $e->getStatusCode());
         }
     }
 }

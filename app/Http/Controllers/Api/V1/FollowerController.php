@@ -20,19 +20,31 @@ class FollowerController extends Controller implements HasMiddleware
         return [new Middleware('auth:sanctum', only: ['follow', 'unfollow'])];
     }
 
+    public function followers(User $user)
+    {
+        $followers = $this->followerService->getFollowers($user);
+        return response()->format($followers, 'User followers received.');
+    }
+
+    public function following(User $user)
+    {
+        $following = $this->followerService->getFollowing($user);
+        return response()->format($following, 'User following received.');
+    }
+
     public function follow(User $user)
     {
         if (Auth::id() === $user->id) {
-            return response()->apiResponse([], false, 'You cannot follow yourself.', 400);
+            return response()->format([], 'You cannot follow yourself.', false, 400);
         }
 
         $follower = $this->followerService->follow($user);
 
         if ($follower->wasRecentlyCreated) {
-            return response()->apiResponse([], true, 'User followed successfully.', 201);
+            return response()->format([], 'User followed successfully.', true, 201);
         }
 
-        return response()->apiResponse([], false, 'You are already following this user.', 400);
+        return response()->format([], 'You are already following this user.', false, 400);
     }
 
     public function unfollow(User $user)
@@ -40,21 +52,9 @@ class FollowerController extends Controller implements HasMiddleware
         $deleted = $this->followerService->unfollow($user);
 
         if ($deleted) {
-            return response()->json([], 204);
+            return response()->format([], 'Unfollow was successfully.');
         }
 
-        return response()->apiResponse([], false, 'You are not following this user.', 400);
-    }
-
-    public function followers(User $user)
-    {
-        $followers = $this->followerService->getFollowers($user);
-        return response()->apiResponse($followers, true, '', 200);
-    }
-
-    public function following(User $user)
-    {
-        $following = $this->followerService->getFollowing($user);
-        return response()->apiResponse($following, true, '', 200);
+        return response()->format([], 'You are not following this user.', false, 400);
     }
 }

@@ -23,33 +23,32 @@ class PostController extends Controller implements HasMiddleware
 
     public function index()
     {
-        return response()->apiResponse(PostResource::collection($this->postService->getPaginatedPosts()),
-            true, '' , 200);
+        return response()->format($this->postService->getPaginatedPosts(), 'Posts successfully received.');
     }
 
     public function store(StorePostRequest $request)
     {
         try {
             $post = $this->postService->createPost($request);
-            return response()->apiResponse(new PostResource($post), true, 'Post successfully created.' , 201);
+            return response()->format(new PostResource($post), 'Post successfully created.', true , 201);
         } catch (HttpException $e) {
-            return response()->apiResponse([], false, $e->getMessage() , $e->getStatusCode());
+            return response()->format([], $e->getMessage() , false, $e->getStatusCode());
         }
     }
 
     public function show(string $id)
     {
         $post = $this->postService->getPostById($id);
-        return response()->apiResponse(new PostResource($post), true, '' , 200);
+        return response()->format(new PostResource($post), 'Post successfully retrieved.');
     }
 
     public function update(UpdatePostRequest $request, string $id)
     {
         try {
             $post = $this->postService->updatePost($request, $id);
-            return response()->apiResponse(new PostResource($post), true, 'Post successfully updated.' , 200);
+            return response()->format(new PostResource($post), 'Post successfully updated.');
         } catch (HttpException $e) {
-            return response()->apiResponse([], false, $e->getMessage() , $e->getStatusCode());
+            return response()->format([], $e->getMessage(), false, $e->getStatusCode());
         }
     }
 
@@ -57,9 +56,9 @@ class PostController extends Controller implements HasMiddleware
     {
         try {
             $this->postService->deletePost($id);
-            return response()->json([], 204);
+            return response()->format([], 'Post successfully deleted.');
         } catch (HttpException $e) {
-            return response()->apiResponse([], false, $e->getMessage() , $e->getStatusCode());
+            return response()->format([], $e->getMessage(), false, $e->getStatusCode());
         }
     }
 }

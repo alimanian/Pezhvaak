@@ -23,9 +23,9 @@ class LoginController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->apiResponse([
+        return response()->format([
             'access_token' => $token,
             'token_type' => 'Bearer',
-        ], true, 'Login was successful.' , 201);
+        ], 'Login was successful.', true , 201);
     }
 }

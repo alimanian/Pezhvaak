@@ -17,19 +17,9 @@ class UserResourceController extends Controller
     {
         try {
             $posts = $this->userResourceService->getUserPosts($userId);
-            return response()->apiResponse(PostResource::collection($posts), true, '', 200);
+            return response()->format($posts, 'User posts received.');
         } catch (HttpException $e) {
-            return response()->apiResponse([], false, $e->getMessage(), $e->getStatusCode());
-        }
-    }
-
-    public function userLikes(string $userId)
-    {
-        try {
-            $likes = $this->userResourceService->getUserLikes($userId);
-            return response()->apiResponse(LikeResource::collection($likes), true, '', 200);
-        } catch (HttpException $e) {
-            return response()->apiResponse([], false, $e->getMessage(), $e->getStatusCode());
+            return response()->format([], $e->getMessage(), false, $e->getStatusCode());
         }
     }
 
@@ -37,9 +27,19 @@ class UserResourceController extends Controller
     {
         try {
             $comments = $this->userResourceService->getUserComments($userId);
-            return response()->apiResponse(CommentResource::collection($comments), true, '', 200);
+            return response()->format($comments, 'User comments received.', true, 200);
         } catch (HttpException $e) {
-            return response()->apiResponse([], false, $e->getMessage(), $e->getStatusCode());
+            return response()->format([], $e->getMessage(), false, $e->getStatusCode());
+        }
+    }
+
+    public function userLikes(string $userId)
+    {
+        try {
+            $likes = $this->userResourceService->getUserLikes($userId);
+            return response()->format($likes, 'User likes received.');
+        } catch (HttpException $e) {
+            return response()->format([], $e->getMessage(), false, $e->getStatusCode());
         }
     }
 }

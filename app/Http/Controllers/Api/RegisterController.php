@@ -20,10 +20,10 @@ class RegisterController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->apiResponse([
+        return response()->format([
             'access_token' => $token,
             'token_type' => 'Bearer',
-        ], true, 'User created successfully.' , 201);
+        ], 'User created successfully.', true, 201);
     }
 }
 
