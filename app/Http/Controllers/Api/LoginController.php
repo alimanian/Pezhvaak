@@ -16,7 +16,7 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
-            return response()->apiResponse([], false, 'Invalid email or password.' , 400);
+            return response()->format([], 'Invalid email or password.' , false, 400);
         }
 
         $user->tokens()->delete();
