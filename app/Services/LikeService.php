@@ -17,6 +17,16 @@ class LikeService
             throw new HttpException(403, 'You do not have permission to create this like.');
         }
 
+        $post = Post::findOrFail($request['post_id']);
+
+        $existingLike = Like::where('user_id', Auth::id())
+            ->where('post_id', $post->id)
+            ->first();
+
+        if ($existingLike) {
+            throw new HttpException(400, 'You have already liked this post.');
+        }
+
         try {
             return Like::create($request->validated() + ['user_id' => Auth::id()]);
         } catch (\Exception $e) {
